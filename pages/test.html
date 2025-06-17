@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .service-card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            background-color: white;
+        }
+
+        .service-header {
+            color: #0d6efd;
+            padding: 15px 20px 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .service-body {
+            padding: 20px;
+        }
+
+        .read-more {
+            color: #0d6efd;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .no-results {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation (same as your main site) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/how-it-works.html">How it Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/services.html">Our Services</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="" method="get">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Search..." required>
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 id="search-title-test" class="mb-4">Search Results</h2>
+        <div id="search-results-test" class="row">
+            <!-- Results will appear here -->
+        </div>
+    </div>
+
+    <script>
+        // Get search term from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('q');
+
+        // Update page title
+        if (searchTerm) {
+            document.getElementById('search-title-test').textContent = `Search Results for "${searchTerm}"`;
+            console.log(searchTerm)
+        }
+
+        // Content database - UPDATE THIS WITH YOUR ACTUAL CONTENT
+        const contentDatabase = [
+            {
+                title: "How it Works",
+                url: "/pages/how-it-works.html",
+                keywords: ["how", "works", "process", "aca", "forms", "1095"],
+                excerpt: "Our outsourcing services are designed to make your life easier. Read these simple steps to understand the process..."
+            },
+            {
+                title: "TIN Matching",
+                url: "/pages/tin-matching.html",
+                keywords: ["tin", "verification", "tax", "irs"],
+                excerpt: "Verify Tax ID numbers to ensure accurate reporting to the IRS..."
+            },
+            {
+                title: "Web Presentment",
+                url: "/pages/web-presentment.html",
+                keywords: ["web", "presentment", "delivery", "electronic"],
+                excerpt: "Electronic delivery options for your forms..."
+            },
+            {
+                title: "Printing & Mailing",
+                url: "/pages/printing-mailing.html",
+                keywords: ["print", "mail", "post", "paper"],
+                excerpt: "Professional printing and mailing services for your forms..."
+            }
+        ];
+
+        // Display search results
+        function showResults() {
+            const resultsContainer = document.getElementById('search-results-test');
+            console.log(resultsContainer)
+            if (!searchTerm) {
+                resultsContainer.innerHTML = '<div class="col-12 no-results">Please enter a search term</div>';
+                return;
+            }
+
+            const searchTermLower = searchTerm.toLowerCase();
+            const matches = contentDatabase.filter(item =>
+                item.keywords.some(keyword => keyword.includes(searchTermLower)) ||
+                item.title.toLowerCase().includes(searchTermLower)
+            );
+
+            if (matches.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="col-12 no-results">
+                        No results found for "${searchTerm}". Try different keywords like:
+                        <ul class="mt-2">
+                            <li>how</li>
+                            <li>forms</li>
+                            <li>tin</li>
+                            <li>print</li>
+                        </ul>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsContainer.innerHTML = matches.map(item => `
+                <div class="col-md-6 mb-4">
+                    <div class="service-card">
+                        <div class="service-header">${item.title}</div>
+                        <div class="service-body">
+                            <p>${item.excerpt}</p>
+                            <a href="${item.url}" class="read-more">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Run search when page loads
+        document.addEventListener('DOMContentLoaded', showResults);
+    </script>
+</body>
+
+</html>

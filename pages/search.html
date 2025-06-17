@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+
+<body class="w-100 min-vh-100 h-100">
+    <div include-html="/components/header.html"></div>
+    <div include-html="/components/search.html"></div>
+    <div include-html="/components/more.html"></div>
+    <div include-html="/components/footer.html"></div>
+
+    <script src="/js/include.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("includes-loaded", () => {
+            // Get search term from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('q');
+
+            // Update page title
+            if (searchTerm) {
+                document.getElementById('search-title').textContent = `Search Results for "${searchTerm}"`;
+            }
+
+            // Sample content database (replace with your actual content)
+            const contentDatabase = [
+                {
+                    title: "About Us",
+                    url: "about.html",
+                    keywords: ["about", "1095", "service", "Web-based Solution", "process", "aca", "Outsourcing Solution", "1095"],
+                    excerpt: "At Outsource1095.com we strive to provide an outstanding service for the information reporting industry. In the last ten years..."
+                },
+                {
+                    title: "ACA Filling Requirements",
+                    url: "aca_filling_requirements.html",
+                    keywords: ["about", "1095", "service", "aca", 'filling', 'requirements', "Web-based Solution", "process", "aca", "Outsourcing Solution", "1095"],
+                    excerpt: "Employers with 50 or more full-time employees (including FTEs – Full-time Equivalent Employees) and all self-insured employers regardless of size must report..."
+                },
+                {
+                    title: "1095 Correction Processing",
+                    url: "correction_processing.html",
+                    keywords: ["correction", "processing", 'correction processing', "process", "aca", "forms", "1095",],
+                    excerpt: "If you made a mistake on a 1095 form that has already been filed, you would need to file a 1095 correction. Many service providers..."
+                },
+                {
+                    title: "1095 IRS e-Filing Services",
+                    url: "e_filling_services.html",
+                    keywords: ["e filling services", 'e', 'fillinig', 'services', "verification", "tax", "irs", "1095"],
+                    excerpt: "As part of our 1095 outsourcing services, we electronically file your 1095-C, 1095-B, 1094-C, and 1094-B ACA forms with the IRS. We participate in..."
+                },
+                {
+                    title: "How It Works",
+                    url: "how_it_works.html",
+                    keywords: ["how", "how it works", "works", "web", "presentment"],
+                    excerpt: "Our outsourcing services are designed to make your life easier. Read these simple steps to understand the process...."
+                },
+                {
+                    title: "1095 Printing & Mailing Services",
+                    url: "printing_and_mailing.html",
+                    keywords: ["printing", "mailing", "services", "web", "presentment", '1095'],
+                    excerpt: "As part of our 1095 outsourcing services, we provide printing and mailing services for 1095-C and 1095-B ACA forms. Our Service Bureau can handle..."
+                },
+                {
+                    title: "REPORTING TIMELINE",
+                    url: "reporting_timeline.html",
+                    keywords: ["reporting", "timeline", "reporting timeline", "web", "presentment"],
+                    excerpt: "The filing deadlines for the Affordable Care Act reporting are February 28th if filing on paper and March 31st if filing electronically. Forms 1095-C and 1095-B must..."
+                },
+                {
+                    title: "Security",
+                    url: "web-presentment.html",
+                    keywords: ["security", "sec",],
+                    excerpt: "At Outsource1095.com keeping our client’s information safe and secure is our topmost priority. We provide a secure environment to maintain the confidentiality of client information. We use advanced SSL to offer you a secure website. We use..."
+                },
+                {
+                    title: "Service Bureau",
+                    url: "service_bureau.html",
+                    keywords: ["service", "bureau", "service bureau", "web"],
+                    excerpt: "We offer the printing and mailing services at our service bureau. We can print, fold, stuff, and mail any quantity of information return forms. Our prices..."
+                },
+                {
+                    title: "Supported Forms",
+                    url: "supported_forms.html",
+                    keywords: ["supported", "forms", "supported forms", "web"],
+                    excerpt: "Here is a list of all the IRS ACA forms we support..."
+                },
+                {
+                    title: "TIN Matching",
+                    url: "tin_matching.html",
+                    keywords: ["tin", "matching", "tin matching"],
+                    excerpt: "It is important for you to make sure that you are reporting correct Tax ID/name combinations to the IRS when submitting 1095 forms. To prevent IRS penalties..."
+                },
+                {
+                    title: "Web Based Solutions",
+                    url: "web_based_solution.html",
+                    keywords: ["web", "based", "solution", "web based", "web based solution"],
+                    excerpt: "Our web-based self-service solution is designed for our customers who only have a handful of forms (typically less than 250). At www.OnlineFileTaxes.com and www.eFile360.com, we offer a..."
+                },
+                {
+                    title: "Web Presentment",
+                    url: "web_presentment.html",
+                    keywords: ["web", "presentment", "web presentment"],
+                    excerpt: "E-Delivery instead of mailing paper copies is rapidly becoming very popular for providing 1095-C or 1095-B copies to employees. E-delivery is also going to be..."
+                }
+
+            ];
+
+            // Display search results
+            function showResults() {
+                const resultsContainer = document.getElementById('search-results');
+
+                if (!searchTerm) {
+                    resultsContainer.innerHTML = '<p>Please enter a search term</p>';
+                    return;
+                }
+
+                const searchTermLower = searchTerm.toLowerCase();
+                const matches = contentDatabase.filter(item =>
+                    item.keywords.some(keyword => keyword.includes(searchTermLower)) ||
+                    item.title.toLowerCase().includes(searchTermLower)
+                );
+
+                if (matches.length === 0) {
+                    resultsContainer.innerHTML = `
+              <div class="col-12">
+                  <div class="alert alert-info">
+                      No results found for "${searchTerm}". Try different keywords.
+                  </div>
+              </div>
+          `;
+                    return;
+                }
+
+                resultsContainer.innerHTML = matches.map(item => `
+          <div class="col-md-6 mb-4">
+              <div class="service-card">
+                  <div class="service-header">${item.title}</div>
+                  <div class="service-body">
+                      <p>${item.excerpt}</p>
+                      <a href="${item.url}" class="read-more">Read More →</a>
+                  </div>
+              </div>
+          </div>
+      `).join('');
+            }
+
+            // Run the search when page loads
+            showResults();
+        });
+    </script>
+</body>
+
+</html>
