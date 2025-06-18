@@ -8,6 +8,7 @@
   height: 450px;
   background-size: cover;
   background-position: center;
+  padding: 0 10px;
 }
 
 .hero-overlay {
@@ -78,4 +79,9 @@
 
 .carousel-indicators button.active {
   background-color: #0d6efd;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
 }

@@ -1,32 +1,42 @@
-// 1. Utilities
-@import "utilities/_variables";
-@import "utilities/_mixins";
+// main.scss
 
-// 2. Vendor (Bootstrap)
+// First, bootstrap functions
+@import "../node_modules/bootstrap/scss/functions";
+
+// THEN your variables (which now includes $theme-colors)
+@import "utilities/_variables";
+
+// Now continue loading the rest of Bootstrap's required parts
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Bootstrap full
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-// 3. Base styles
+// Your utilities
+@import "utilities/_mixins";
+
+// Base styles
 @import "base/_reset";
 @import "base/_typography";
 
-// 4. Layout
+// Layout
 @import "layout/_grid";
 @import "layout/_container";
 
-// 5. Components
+// Components
 @import "components/_hero";
 @import "components/_header";
 @import "components/_footer";
 @import "components/_buttons";
 @import "components/_navbar";
-@import "components/_info2";
-@import "components/_info4";
-@import "components/_info9";
-@import "components/_info14";
-@import "components/_info16";
+@import "components/_how_it_works";
+@import "components/_reporting_timeline";
+@import "components/_web_based_solution";
+@import "components/_customer_testimonials";
+@import "components/_recent_post";
 @import "components/_search";
 
-
-// 6. Pages
+// Pages
 @import "pages/_home";
-

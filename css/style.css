@@ -11864,6 +11864,7 @@ textarea.form-control-lg {
   height: 450px;
   background-size: cover;
   background-position: center;
+  padding: 0 10px;
 }
 
 .hero-overlay {
@@ -11936,8 +11937,13 @@ textarea.form-control-lg {
   background-color: #0d6efd;
 }
 
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+}
+
 .custom-nav {
-  height: 100px;
+  min-height: 100px;
 }
 
 .navbar-brand-custom {
@@ -11945,6 +11951,31 @@ textarea.form-control-lg {
   flex-grow: 1;
 }
 
+.custom-button {
+  outline: 1px solid #007bff !important;
+}
+
+.custom-button:hover {
+  background-color: #007bff !important;
+}
+
+.nav-logo {
+  color: #0d6efd;
+}
+
+@media (min-width: 992px) {
+  .search-expand-active .navbar-nav,
+  .search-expand-active .navbar-toggler {
+    display: none !important;
+  }
+  .navbar-search-input {
+    width: 150px;
+    transition: width 0.3s ease;
+  }
+  .search-expand-active .navbar-search-input {
+    width: 400px;
+  }
+}
 .process-container {
   max-width: 800px;
   margin: 0 auto;
